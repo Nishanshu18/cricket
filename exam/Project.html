@@ -1,0 +1,187 @@
+	<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Form</title>
+
+	<style type="text/css">
+		#error-box
+		{
+			border: solid 1px red;
+			background: darkcyan;
+			padding: 15px;
+			margin: 15px;
+			width: 400px;
+			display: none;
+		}
+	</style>
+
+	<script type="text/javascript">
+		function checkproject(frm) 
+		{
+			var fn, ln, gender, mno, mail, cmail, vc, tc, status, error;
+			
+			fn = frm.fn.value;
+			ln = frm.ln.value;
+			gender = frm.gender.value;
+			mno = frm.mno.value;
+			mail = frm.mail.value;
+			cmail = frm.cmail.value;
+			vc = frm.vc.value;
+			tc = frm.tc.value;
+
+			status = true;
+			error = [];
+
+			if (fn=="" || fn.length==0) 
+			{
+				error[error.length] = "First Name is Invalid! Please Enter a valid First Name"
+				status=false;
+			}
+			else if(fn.length<=6 || fn.length>=25)
+			{
+				error[error.length] = "First Name is Invalid! Enter a MIN 6 digit and MAX 25 digit"
+				status=false;
+			}
+
+
+			if (ln=="" || ln.length==0) 
+			{
+				error[error.length] = "Last Name is Invalid! Pls Enter a valid Last Name..";
+				status = false;
+			}
+			else if(ln.length<6 || ln.length>=25)
+			{
+				error[error.length] = "Last Name is Invalid! Enter a MIN 6 digit and MAX 25 digit";
+				status = false;
+			}
+
+
+			if (gender=="--Select One--") 
+			{
+				error[error.length] = "Pls Select any Gender!";
+				status = false;
+			}
+
+
+			if (mno=="" || mno.length==0) 
+			{
+				error[error.length] = "Mobile No. is Invalid! Pls Enter a valid Mobile No.";
+				status = false;
+			}
+			else if(/^[0-9]{10}$/.test(mno)==false)
+			{
+				error[error.length] = "Mobile No. is Invalid! Pls Enter a valid 10 digit Mobile No.";
+				status=false;
+			}
+
+
+			if (mail=="" || mail.length==0) 
+			{
+				error[error.length] = "Email is Invalid! Pls Enter a Valid Mail";
+				status = false;
+			}
+			else if (/^[0-9]{1} [a-z]{10} [@]{1}$/.test(mail)==true) 
+			{
+				error[error.length] = "Email is Invalid! Pls Enter @ or .com";
+				status = true;	
+			}
+
+
+			if (cmail=="" || cmail.length==0) 
+			{
+				error[error.length] = "Confirm Email is Invalid! Pls Enter a Valid Mail";
+				status = false;
+			}
+			else if (/^[0-9]{1} [a-z]{10} [@]{1}$/.test(cmail)==true) 
+			{
+				error[error.length] = "Confirm Email is Invalid! Pls Enter @ or .com";
+				status = true;	
+			}
+
+
+			if (mail!=cmail) 
+			{
+				error[error.length] = "Confirm Mail is not match to your above Mail!";
+				status = false;	
+			}
+
+
+			if (vc=="" || vc.length==0) 
+			{
+				error[error.length] = "Verification Code is Invalid! Pls Enter a Verification Code";
+				status = false;	
+			}
+			else if (/^[0-9]{4}-[0-9]{5}-[0-9]{3}$/.test(vc)==false) 
+			{
+				error[error.length] = "Pls Enter a Valid 12 digit Verification Code!";
+				status = false;	
+			}
+
+
+			if (tc = frm.tc.checked==false) 
+			{
+				error[error.length] = "Pls Click on Terms & Condition!";
+				status = false;	
+			}
+
+			
+			
+			if (status==false) 
+			{
+				showerror(error);
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+
+			function showerror(error) 
+			{
+				var x, srno=1; message="<h2> Some Error Below</h3>";
+
+				for(x=0; x<error.length; x++)
+				{
+					message = message + "<br>" + srno + "." +  error[x];
+					srno++; 
+				}
+
+				document.getElementById('error-box').innerHTML=message;
+				document.getElementById('error-box').style.display='block';
+			}
+		}
+	</script>
+
+</head>
+<body>
+ 	<form action="airthmetic.html" onsubmit="return checkproject(this)">
+ 		<p>First Name : <input type="text" name="fn" id="fn" placeholder="First Name"></p>
+
+ 		<p>Last Name : <input type="text" name="ln" id="ln" placeholder="Last Name"></p>
+ 		
+ 		<p>Gender : <select id="gender" name="gender">
+ 						<option>--Select One--</option>
+ 						<option>Male</option>
+ 						<option>Female</option>
+ 					</select></p>
+
+ 		<p>Mobile No. : <input type="text" name="mno" id="mno" placeholder="Mobile No."></p>
+ 		
+ 		<p>Email : <input type="text" name="mail" id="mail" placeholder="Email"></p>
+
+ 		<p>Confirm Email : <input type="text" name="cmail" id="cmail" placeholder="Confirm Email"></p>
+	
+ 		<p>Verification Code  : <input type="text" name="vc" id="vc" placeholder="0000-00000-000"></p>
+
+ 		<p>Term & Condition : <input type="checkbox" name="tc" id="tc"></p>
+ 		
+ 		<p><input type="submit" value="Register Now"></p>
+ 	</form>
+
+ 	<div class="error-box" id="error-box">
+
+ 	</div>
+</body>
+</html> 
